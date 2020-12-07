@@ -1,0 +1,231 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+      "version": "1.0.0",
+      "title": "CRUD API REST OF VEHICLES",
+      "description": "Vehicle Crud",
+      "license": {
+          "name": "MIT",
+          "url": "https://opensource.org/licenses/MIT"
+      }
+  },
+  "servers": [
+      {
+          "url": "/",
+          "description": "Local Dev"
+      }
+  ],
+  "tags": [
+      {
+          "name": "Vehicles",
+          "description": "API for vehicles in the system"
+      }
+  ],
+  "consumes": [
+      "application/json"
+  ],
+  "produces": [
+      "application/json"
+  ],
+  "paths": {
+      "/vehicles": {
+          "get": {
+              "tags": [
+                  "Vehicles"
+              ],
+              "summary": "Get all vehicle in system",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/vehicles"
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "Vehicles"
+              ],
+              "summary": "Create a new vehicle in system",
+              "requestBody": {
+                  "description": "vehicle Object",
+                  "required": true,
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/definitions/Vehicle"
+                          }
+                      }
+                  }
+              },
+              "produces": [
+                  "application/json"
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/id"
+                      }
+                  },
+                  "400": {
+                      "description": "Failed. Bad post data."
+                  }
+              }
+          }
+      },
+      "/vehicles/{id}": {
+          "parameters": [
+              {
+                  "name": "id",
+                  "in": "path",
+                  "required": true,
+                  "description": "ID of the vehicle that we want to match",
+                  "type": "string"
+              }
+          ],
+          "get": {
+              "tags": [
+                  "Vehicles"
+              ],
+              "summary": "Get vehicle with given ID",
+              "parameters": [
+                  {
+                      "in": "path",
+                      "name": "id",
+                      "required": true,
+                      "description": "vehicle with id",
+                      "schema": {
+                          "$ref": "#/definitions/id"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/Vehicle"
+                      }
+                  },
+                  "404": {
+                      "description": "Failed. vehicle not found."
+                  }
+              }
+          },
+          "put": {
+              "summary": "Update vehicle with given ID",
+              "tags": [
+                  "Vehicles"
+              ],
+              "requestBody": {
+                  "description": "vehicle Object",
+                  "required": true,
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/definitions/Vehicle"
+                          }
+                      }
+                  }
+              },
+              "parameters": [
+                  {
+                      "in": "path",
+                      "name": "id",
+                      "required": true,
+                      "description": "vehicle with new values of properties",
+                      "schema": {
+                          "$ref": "#/definitions/id"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/Vehicle"
+                      }
+                  },
+                  "400": {
+                      "description": "Failed. Bad post data."
+                  },
+                  "404": {
+                      "description": "Failed. vehicle not found."
+                  }
+              }
+          },
+          "delete": {
+              "summary": "Delete vehicle with given ID",
+              "tags": [
+                  "Vehicles"
+              ],
+              "parameters": [
+                  {
+                      "in": "path",
+                      "name": "id",
+                      "required": true,
+                      "description": "Delete vehicle with id",
+                      "schema": {
+                          "$ref": "#/definitions/id"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/id"
+                      }
+                  },
+                  "404": {
+                      "description": "Failed. vehicle not found."
+                  }
+              }
+          }
+      }
+  },
+  "definitions": {
+      "id": {
+          "properties": {
+              "uuid": {
+                  "type": "string"
+              }
+          }
+      },
+      "Vehicle": {
+          "type": "object",
+          "properties": {
+              "board": {
+                  "type": "string"
+              },
+              "chassis": {
+                  "type": "string"
+              },
+              "renavam": {
+                  "type": "string"
+              },
+              "model": {
+                  "type": "string"
+              },
+              "brand": {
+                "type": "string"
+              },
+              "year": {
+                  "type": "string"
+              }
+          }
+      },
+      "vehicles": {
+          "type": "object",
+          "properties": {
+              "vehicles": {
+                  "type": "object",
+                  "additionalProperties": {
+                      "$ref": "#/definitions/Vehicle"
+                  }
+              }
+          }
+      }
+  }
+}
